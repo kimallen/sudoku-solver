@@ -8,17 +8,14 @@ class Sudoku
     @board_array = @board_string.split("").map(&:to_i)
   end
 
-  def empty_cell
+  def empty_cell_array
     @empty_cell_indices = []
    # @board_string.map! { |item| item.to_i }
    # @board_string.each_with_index { |item, index| empty_cell_indices << index if item.zero? }
    @board_array.each_with_index { |item, index| @empty_cell_indices << index if item.zero? }
-    p @empty_cell_indices
+     @empty_cell_indices
   end
 
-  def empty_cell_indices
-
-  end
 
   def solve
   end
