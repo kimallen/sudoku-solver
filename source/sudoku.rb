@@ -1,3 +1,5 @@
+require 'pp'
+
 class Sudoku
   def initialize(board_string)
     #@board_string = board_string.split("")
@@ -16,38 +18,6 @@ class Sudoku
      @empty_cell_indices
   end
 
-
-  def solve
-  end
-
-  def board
-  end
-
-  # Returns a string representing the current state of the board
-  def to_s
-  end
-end
-
-
-#####DRIVER CODE#########
-game = Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")
-game.board_convert
-game.empty_cell
-
-
-# KIMS CODE
-board_string = "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"
-
-class Sudoku
-  def initialize(board_string)
-    @board_string = board_string
-  end
-
-
-  def board_convert
-    @board_array = @board_string.split("").map(&:to_i)
-  end
-
   def row_array(index)
     @row_array = []
     @column_name= index % 9
@@ -59,7 +29,7 @@ class Sudoku
     @row_array
   end
 
-    def column_array(index)
+  def column_array(index)
       @column_array = []
       @column_name= index % 9
       @row_name = index/9
@@ -68,9 +38,9 @@ class Sudoku
         @column_array<<@board_array[9*base + @column_name]
       end
       @column_array
-    end
+  end
 
-    def box_array(index)
+  def box_array(index)
       @box_array = []
       @column_name= index % 9
       @row_name = index/9
@@ -84,20 +54,14 @@ class Sudoku
         @box_array<<@board_array[base + 18]
       end
       @box_array
-    end
-
-  def board
-
   end
 
-  def empty_cell_array
-    board_convert
-    @empty_cell_indices= []
-    @board_array.each_with_index do |e, i|
-      @empty_cell_indices<< i if e == 0
-    end
-    p @empty_cell_indices
-  end
+def check_numbers
+  existing_numbers=@row_array+@column_array+@box_array
+  existing_numbers.uniq!
+  possible_answers = [1,2,3,4,5,6,7,8,9]
+  @answer=possible_answers-existing_numbers
+end
 
   def solve
     board_convert
@@ -117,42 +81,123 @@ class Sudoku
     end
     @board_array
   end
-  # Returns a string representing the current state of the board
-  def to_s
-  end
-end
-
-sudoku = Sudoku.new(board_string)
-sudoku.board_convert
-sudoku.row_array(4)
-sudoku.column_array(4)
-sudoku.box_array(4)
-sudoku.empty_cell_array
-p sudoku.solve
-
-# KAIS CODE
-require 'pp'
-class Sudoku
-  def initialize(board_string)
-  end
-
-  def solve
-
-  end
 
   def board
   end
 
   # Returns a string representing the current state of the board
   def to_s
+    @board_array = @board_array.map(&:to_s)
+    # p @board_array
+    # counter = 0
+    # @base_array = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    # @board_array.each do |element| @base_array.each { |index| until counter > 8
+    #   print element[index+counter]
+    #   counter+1
+    #   end
+    #    }
+    #    puts
+    pp @board_array.each_slice(9).to_a
+    # end
   end
+
+
 end
 
 
+#####DRIVER CODE#########
+puts "Game 1"
 
-def check_numbers
-  existing_numbers=@row_array+@column_array+@box_array
-  existing_numbers.uniq!
-  possible_answers = [1,2,3,4,5,6,7,8,9]
-  @answer=possible_answers-existing_numbers
-end
+board_string = "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"
+
+game = Sudoku.new(board_string)
+game.board_convert
+game.empty_cell_array
+game.solve
+game.to_s
+
+puts "Game 2"
+board_string = "--5-3--819-285--6-6----4-5---74-283-34976---5--83--49-15--87--2-9----6---26-495-3"
+game = Sudoku.new(board_string)
+game.board_convert
+game.empty_cell_array
+game.solve
+game.to_s
+
+puts "Game 3"
+board_string = "29-5----77-----4----4738-129-2--3-648---5--7-5---672--3-9--4--5----8-7---87--51-9"
+game = Sudoku.new(board_string)
+game.board_convert
+game.empty_cell_array
+game.solve
+game.to_s
+
+puts "Game 4"
+board_string = "-8--2-----4-5--32--2-3-9-466---9---4---64-5-1134-5-7--36---4--24-723-6-----7--45-"
+game = Sudoku.new(board_string)
+game.board_convert
+game.empty_cell_array
+game.solve
+game.to_s
+
+puts "Game 5"
+board_string = "6-873----2-----46-----6482--8---57-19--618--4-31----8-86-2---39-5----1--1--4562--"
+game = Sudoku.new(board_string)
+game.board_convert
+game.empty_cell_array
+game.solve
+game.to_s
+
+#expect not to work#
+puts "Game 6"
+board_string = "---6891--8------2915------84-3----5-2----5----9-24-8-1-847--91-5------6--6-41----"
+game = Sudoku.new(board_string)
+game.board_convert
+game.empty_cell_array
+game.solve
+game.to_s
+
+# KIMS CODE
+#
+
+
+
+
+
+
+
+
+
+
+
+
+  # def board
+
+  # end
+
+  # def empty_cell_array
+  #   board_convert
+  #   @empty_cell_indices= []
+  #   @board_array.each_with_index do |e, i|
+  #     @empty_cell_indices<< i if e == 0
+  #   end
+  #   p @empty_cell_indices
+  # end
+
+
+  # Returns a string representing the current state of the board
+
+
+# sudoku = Sudoku.new(board_string)
+# sudoku.board_convert
+# sudoku.row_array(4)
+# sudoku.column_array(4)
+# sudoku.box_array(4)
+# sudoku.empty_cell_array
+# p sudoku.solve
+
+# KAIS CODE
+
+
+
+
