@@ -2,7 +2,6 @@ require 'pp'
 
 class Sudoku
   def initialize(board_string)
-    #@board_string = board_string.split("")
     @board_string = board_string
   end
 
@@ -12,8 +11,6 @@ class Sudoku
 
   def empty_cell_array
     @empty_cell_indices = []
-   # @board_string.map! { |item| item.to_i }
-   # @board_string.each_with_index { |item, index| empty_cell_indices << index if item.zero? }
    @board_array.each_with_index { |item, index| @empty_cell_indices << index if item.zero? }
      @empty_cell_indices
   end
@@ -56,7 +53,7 @@ class Sudoku
       @box_array
   end
 
-def check_numbers
+def unused_numbers
   existing_numbers=@row_array+@column_array+@box_array
   existing_numbers.uniq!
   possible_answers = [1,2,3,4,5,6,7,8,9]
@@ -73,7 +70,7 @@ end
         row_array(empty_cell)
         column_array(empty_cell)
         box_array(empty_cell)
-        check_numbers
+        unused_numbers
         if @answer.length==1
           @board_array[empty_cell] = @answer[0]
         end
@@ -88,17 +85,7 @@ end
   # Returns a string representing the current state of the board
   def to_s
     @board_array = @board_array.map(&:to_s)
-    # p @board_array
-    # counter = 0
-    # @base_array = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-    # @board_array.each do |element| @base_array.each { |index| until counter > 8
-    #   print element[index+counter]
-    #   counter+1
-    #   end
-    #    }
-    #    puts
     pp @board_array.each_slice(9).to_a
-    # end
   end
 
 
@@ -157,46 +144,6 @@ game.empty_cell_array
 game.solve
 game.to_s
 
-# KIMS CODE
-#
-
-
-
-
-
-
-
-
-
-
-
-
-  # def board
-
-  # end
-
-  # def empty_cell_array
-  #   board_convert
-  #   @empty_cell_indices= []
-  #   @board_array.each_with_index do |e, i|
-  #     @empty_cell_indices<< i if e == 0
-  #   end
-  #   p @empty_cell_indices
-  # end
-
-
-  # Returns a string representing the current state of the board
-
-
-# sudoku = Sudoku.new(board_string)
-# sudoku.board_convert
-# sudoku.row_array(4)
-# sudoku.column_array(4)
-# sudoku.box_array(4)
-# sudoku.empty_cell_array
-# p sudoku.solve
-
-# KAIS CODE
 
 
 
